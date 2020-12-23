@@ -70,7 +70,6 @@ export default class Room extends Component {
 
     OpenSubtitles.search({
       query: window.document.getElementById("moviename").value,
-      gzip: true,
     })
       .then((subtitles) => {
         var subs = [];
