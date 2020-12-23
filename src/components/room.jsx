@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import "../App.scss";
 import ReactPlayer from "react-player/lazy";
-import Duration from "../../durationn";
+import Duration from "../duration.js";
 import { findDOMNode } from "react-dom";
 import topbar from "../IMGS/topBar.svg";
 import curtainLeft from "../IMGS/curtainLeft.svg";
 import curtainRight from "../IMGS/curtainRight.svg";
 import screenfull from "screenfull";
-import firebase from "../../firebase";
+import firebase from "../firebase";
 import Jitsi from "react-jitsi";
 
-import JedaiVideoConfig from "../../videoChat/jitsiChat";
+import JedaiVideoConfig from "../videoChat/jitsiChat";
 import {
   BsFullscreenExit,
   BsFullscreen,
@@ -19,7 +19,7 @@ import {
   BsFillVolumeMuteFill,
   BsFillVolumeUpFill,
 } from "react-icons/bs";
-import Chat from "../../videoChat/chat";
+//import Chat from "../../videoChat/chat";
 var subsfetchs = null;
 export default class Room extends Component {
   state = {
@@ -39,7 +39,6 @@ export default class Room extends Component {
     var urlref = firebase.database().ref("room/url");
     urlref.on("value", function (snapshot) {
       thisObj.setState({ url: snapshot.val() });
-      console.log("hhhhhhhhhhh: " + snapshot.val());
     });
 
     urlref = firebase.database().ref("room/subsUrl");
