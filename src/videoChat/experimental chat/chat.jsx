@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import firebase from "../firebase";
+import firebase from "../../firebase";
 import {
   showMyFace,
   showFriendsFace,
   updateMyVid,
   updatefriendVid,
-} from "./chat.js";
+} from "./chat.jsx";
 export default class Chat extends Component {
   componentDidMount() {
     updateMyVid(this.myvid);

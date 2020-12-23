@@ -30,20 +30,28 @@ export default class Room extends Component {
     duration: 0,
     fullscreen: false,
     subs: [],
+    suburl:"a",//default value
     AllcomponentFullScreen: false,
     movieName: "",
   };
+    //listen to database changes on commponent mount
   componentDidMount() {
     var thisObj = this;
+    
+    //listen to video url cahnges on database
     var urlref = firebase.database().ref("room/url");
     urlref.on("value", function (snapshot) {
       thisObj.setState({ url: snapshot.val() });
     });
 
+    //listen to subs url changes on database
     urlref = firebase.database().ref("room/subsUrl");
     urlref.on("value", function (snapshot) {
+      thisObj.setState({suburl:snapshot.val()}) ;//for initial value
+      //update subs after object rendered
       if (window.document.getElementById("subs") != null)
-        window.document.getElementById("subs").src = snapshot.val();
+        window.document.getElementById("subs").src=snapshot.val();
+      
     });
 
     this.listenToPlayingState();
@@ -51,35 +59,39 @@ export default class Room extends Component {
       this.listenToPlayingState();
     }, 5000);
   }
-
+  
+  //uptate video url on database
   updateUrl = () => {
     var updates = {};
     updates["room/url"] = this.state.url;
     return firebase.database().ref().update(updates);
   };
+
+  //uptate subtitles url on database
   updateSubsUrl = (url) => {
     var updates = {};
     updates["room/subsUrl"] = url;
     return firebase.database().ref().update(updates);
   };
+
   getSubs = () => {
     console.log("here");
     const OS = require("opensubtitles-api");
     const OpenSubtitles = new OS("UserAgent");
 
     OpenSubtitles.search({
+      //get subs from modal input filed
       query: window.document.getElementById("moviename").value,
     })
       .then((subtitles) => {
         var subs = [];
-        // an array of objects, no duplicates (ordered by
-        // matching + uploader, with total downloads as fallback)
-        console.log(subtitles);
+        //update subs on state
         subs = Object.values(subtitles);
         this.setState({ subs: subs });
       })
       .catch(console.error);
   };
+
   handleProgress = (state) => {
     console.log("onProgress", state);
     // We only want to update time slider if we are not currently seeking
@@ -87,11 +99,13 @@ export default class Room extends Component {
       this.setState(state);
     }
   };
+  //updates the duration state
   handleDuration = (duration) => {
     console.log("onDuration", duration);
     this.setState({ duration });
   };
 
+/*--- handle seek functions---*/
   handleSeekMouseDown = (e) => {
     this.setState({ seeking: true });
   };
@@ -99,7 +113,7 @@ export default class Room extends Component {
   handleSeekChange = (e) => {
     this.setState({ played: parseFloat(e.target.value) });
   };
-
+  //update seeking point in database
   handleSeekMouseUp = (e) => {
     this.setState({ seeking: false });
     if (this.player != undefined) {
@@ -112,18 +126,20 @@ export default class Room extends Component {
     }
   };
 
+  //video full screen function
   handleClickFullscreen = () => {
     if (this.state.fullscreen) screenfull.exit(findDOMNode(this.playerdiv));
     else screenfull.request(findDOMNode(this.playerdiv));
     this.setState({ fullscreen: !this.state.fullscreen });
   };
-
+  //optinal function for fullscreen for all veiw port
   handleClickFullscreenAllcomponent = () => {
     if (this.state.AllcomponentFullScreen) screenfull.exit(findDOMNode(this));
     else screenfull.request(findDOMNode(this));
     this.setState({ AllcomponentFullScreen: !this.state.fullscreen });
   };
 
+  //update state when database state changes
   listenToPlayingState = () => {
     var thisobj = this;
     var playera = this.player;
@@ -163,10 +179,6 @@ export default class Room extends Component {
 
   ref = (player) => {
     this.player = player;
-  };
-
-  subref = (subs) => {
-    this.subs = subs;
   };
   handleMovieNameChange(event) {
     //this.setState({ movieName: event.target.value });
@@ -224,10 +236,9 @@ export default class Room extends Component {
                       tracks: [
                         {
                           kind: "subtitles",
-                          src: null,
+                          src: this.state.suburl,
                           default: true,
                           id: "subs",
-                          //ref: this.subref,
                         },
                       ],
                     },
