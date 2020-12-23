@@ -222,7 +222,7 @@ export default class Room extends Component {
                   onDuration={this.handleDuration}
                   config={{
                     file: {
-                      //attributes: { crossOrigin: "" },
+                      attributes: { crossOrigin: "anonymous" },
                       tracks: [
                         {
                           kind: "subtitles",
