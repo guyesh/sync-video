@@ -7,7 +7,6 @@ import topbar from "./IMGS/topBar.svg";
 import curtainLeft from "./IMGS/curtainLeft.svg";
 import curtainRight from "./IMGS/curtainRight.svg";
 import screenfull from "screenfull";
-import subtitles from "./subtitles1.vtt";
 import firebase from "./firebase";
 import Jitsi from "react-jitsi";
 
@@ -228,7 +227,7 @@ export default class Room extends Component {
                       tracks: [
                         {
                           kind: "subtitles",
-                          src: /*subsfetchs*/ subtitles,
+                          src: subsfetchs,
                           default: true,
                           id: "subs",
                           //ref: this.subref,
