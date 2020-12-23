@@ -371,10 +371,10 @@ export default class Room extends Component {
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="exampleFormControlSelect1">Select subs</label>
+                    <label for="subsSelect">Select subs</label>
                     <select
                       class="form-control"
-                      id="exampleFormControlSelect1"
+                      id="subsSelect"
                       onChange={(e) => {
                         subsfetchs = e.target.value;
                         this.updateSubsUrl();
