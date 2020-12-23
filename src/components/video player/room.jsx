@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import "./App.scss";
+import "../App.scss";
 import ReactPlayer from "react-player/lazy";
-import Duration from "./duration";
+import Duration from "../../durationn";
 import { findDOMNode } from "react-dom";
-import topbar from "./IMGS/topBar.svg";
-import curtainLeft from "./IMGS/curtainLeft.svg";
-import curtainRight from "./IMGS/curtainRight.svg";
+import topbar from "../IMGS/topBar.svg";
+import curtainLeft from "../IMGS/curtainLeft.svg";
+import curtainRight from "../IMGS/curtainRight.svg";
 import screenfull from "screenfull";
-import firebase from "./firebase";
+import firebase from "../../firebase";
 import Jitsi from "react-jitsi";
 
-import JedaiVideoConfig from "./videoChat/jitsiChat";
+import JedaiVideoConfig from "../../videoChat/jitsiChat";
 import {
   BsFullscreenExit,
   BsFullscreen,
@@ -19,7 +19,7 @@ import {
   BsFillVolumeMuteFill,
   BsFillVolumeUpFill,
 } from "react-icons/bs";
-import Chat from "./videoChat/chat";
+import Chat from "../../videoChat/chat";
 var subsfetchs = null;
 export default class Room extends Component {
   state = {
@@ -212,7 +212,7 @@ export default class Room extends Component {
                 ref={this.ref2}
               >
                 <ReactPlayer
-                  className="react-player"
+                  className="react-player player-style"
                   url={this.state.url}
                   width="100%"
                   height="100%"
