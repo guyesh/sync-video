@@ -20,7 +20,6 @@ import {
   BsFillVolumeUpFill,
 } from "react-icons/bs";
 //import Chat from "../../videoChat/chat";
-var subsfetchs = null;
 export default class Room extends Component {
   state = {
     url: null,
@@ -58,9 +57,9 @@ export default class Room extends Component {
     updates["room/url"] = this.state.url;
     return firebase.database().ref().update(updates);
   };
-  updateSubsUrl = () => {
+  updateSubsUrl = (url) => {
     var updates = {};
-    updates["room/subsUrl"] = subsfetchs;
+    updates["room/subsUrl"] = url;
     return firebase.database().ref().update(updates);
   };
   getSubs = () => {
@@ -225,7 +224,7 @@ export default class Room extends Component {
                       tracks: [
                         {
                           kind: "subtitles",
-                          src: subsfetchs,
+                          src: null,
                           default: true,
                           id: "subs",
                           //ref: this.subref,
@@ -375,9 +374,8 @@ export default class Room extends Component {
                       class="form-control"
                       id="subsSelect"
                       onChange={(e) => {
-                        subsfetchs = e.target.value;
-                        this.updateSubsUrl();
-                        document.getElementById("subs").src = e.target.value;
+                        this.updateSubsUrl(e.target.value);        //update subtitles on firebase
+                        document.getElementById("subs").src = e.target.value;  //update subs on player
                       }}
                     >
                       <option value="">none</option>
