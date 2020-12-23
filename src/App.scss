@@ -174,15 +174,10 @@ $tool-size: calc((#{$screen-width * 0.7})) !default;
 }
 .screen-div {
   width: $screen-width;
-  height:calc( 9 * #{$screen-width/16}) !important;//16:9 ratio
   margin-left: calc(50% - #{$screen-width/2}) !important;
   object-fit: contain;
 }
-.player-style{
-  position: relative;
-  height:40rem !important;
-  
-}
+
 .Left-Curtain-contain {
   right: calc(#{$screen-width} + (50% - #{$screen-width/2}) + 0.1%) !important;
   width: calc(#{$screen-width / 2} - 2%);

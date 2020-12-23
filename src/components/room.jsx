@@ -211,7 +211,7 @@ export default class Room extends Component {
                 ref={this.ref2}
               >
                 <ReactPlayer
-                  className="react-player player-style"
+                  className="react-player"
                   url={this.state.url}
                   width="100%"
                   height="100%"
